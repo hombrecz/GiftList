@@ -1,5 +1,6 @@
 package cz.hombre.giftlist.controller
 
+import com.beust.klaxon.Klaxon
 import cz.hombre.giftlist.dto.GiftList
 import cz.hombre.giftlist.service.GiftListService
 import org.springframework.web.bind.annotation.*
@@ -25,4 +26,12 @@ class GiftListController(private val giftListService: GiftListService) {
 
     @DeleteMapping("/{owner}/{giftName}")
     fun removeGift(@PathVariable owner: String, @PathVariable giftName: String) = giftListService.removeGift(owner, giftName)
+
+    @GetMapping("/serialized")
+    fun getSerialized(): String {
+
+        val allGiftLists = giftListService.getAll()
+
+        return Klaxon().toJsonString(allGiftLists)
+    }
 }
