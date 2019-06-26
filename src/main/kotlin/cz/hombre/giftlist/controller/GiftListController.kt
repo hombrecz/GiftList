@@ -29,8 +29,11 @@ class GiftListController(private val giftListRepository: GiftListRepository) {
     }
 
     @PostMapping("/giftList/{owner}")
-    fun addGift(@PathVariable owner: String, @RequestParam("gift") gift: Gift): GiftList {
+    fun addGift(@PathVariable owner: String, @RequestParam("gift") giftName: String): GiftList {
         val giftList = this.getGiftList(owner)
+
+        val gift = Gift(giftName)
+
         giftList.gifts.add(gift)
 
         return giftListRepository.save(giftList)
@@ -56,6 +59,8 @@ class GiftListController(private val giftListRepository: GiftListRepository) {
         val gift = giftList.gifts.find { g -> g.descripton.equals(giftName) }
 
         giftList.gifts.remove(gift)
+
+        giftListRepository.save(giftList)
 
         return giftList
     }
