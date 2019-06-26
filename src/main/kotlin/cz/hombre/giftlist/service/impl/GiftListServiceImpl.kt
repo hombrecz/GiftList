@@ -13,15 +13,17 @@ class GiftListServiceImpl(private val giftListRepository: GiftListRepository) : 
         const val FIRST_VALUE = 0
     }
 
-    override fun save(giftList: GiftList): GiftList {
+    override fun save(giftList: GiftList) = giftListRepository
+            .save(giftList)
+            .sortGifts()
 
-        return giftListRepository.save(giftList)
-    }
-
-    override fun getAll(): MutableCollection<GiftList> {
+    override fun getAll(): List<GiftList> {
         val allGiftLists: MutableCollection<GiftList> = mutableListOf()
 
-        return giftListRepository.findAll().toCollection(allGiftLists)
+        return giftListRepository
+                .findAll()
+                .toCollection(allGiftLists)
+                .sortedBy { it.owner }
     }
 
     override fun addGift(owner: String, giftName: String): GiftList {
@@ -32,6 +34,7 @@ class GiftListServiceImpl(private val giftListRepository: GiftListRepository) : 
         giftList.gifts.add(gift)
 
         return save(giftList)
+                .sortGifts()
     }
 
     override fun removeGift(owner: String, giftName: String): GiftList {
@@ -43,6 +46,7 @@ class GiftListServiceImpl(private val giftListRepository: GiftListRepository) : 
         save(giftList)
 
         return giftList
+                .sortGifts()
     }
 
     override fun reserveGift(owner: String, giftName: String, buyer: String): GiftList {
@@ -56,10 +60,10 @@ class GiftListServiceImpl(private val giftListRepository: GiftListRepository) : 
         giftList.gifts.add(gift ?: Gift(giftName, buyer = buyer))
 
         return save(giftList)
+                .sortGifts()
     }
 
-    override fun findByOwner(owner: String): GiftList {
-
-        return giftListRepository.findByOwner(owner)[FIRST_VALUE]
-    }
+    override fun findByOwner(owner: String) = giftListRepository
+            .findByOwner(owner)[FIRST_VALUE]
+            .sortGifts()
 }

@@ -6,7 +6,7 @@ interface GiftListService {
 
     fun save(giftList: GiftList): GiftList //TODO OD common
 
-    fun getAll(): MutableCollection<GiftList> //TODO OD common
+    fun getAll(): List<GiftList> //TODO OD common
 
     fun addGift(owner: String, giftName: String): GiftList
 
@@ -19,4 +19,3 @@ interface GiftListService {
 }
 
 // TODO OD - let the impl inherit from EntityService class
-// TODO OD - return all the gifts sorted by name and giftlists sorted by owner name

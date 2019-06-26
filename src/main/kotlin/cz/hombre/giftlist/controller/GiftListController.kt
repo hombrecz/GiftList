@@ -14,7 +14,7 @@ class GiftListController(private val giftListService: GiftListService) {
     fun createGiftList(@RequestParam("owner") owner: String): GiftList = giftListService.save(GiftList(owner))
 
     @GetMapping("/giftList")
-    fun getAllGiftLists(): MutableCollection<GiftList> = giftListService.getAll()
+    fun getAllGiftLists(): List<GiftList> = giftListService.getAll()
 
     @PostMapping("/giftList/{owner}")
     fun addGift(@PathVariable owner: String, @RequestParam("gift") giftName: String) = giftListService.addGift(owner, giftName)
