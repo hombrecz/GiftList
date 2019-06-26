@@ -1,5 +1,6 @@
 package cz.hombre.giftlist.service.impl
 
+import cz.hombre.giftlist.Constants.Companion.FIRST_VALUE
 import cz.hombre.giftlist.dto.Gift
 import cz.hombre.giftlist.dto.GiftList
 import cz.hombre.giftlist.repository.GiftListRepository
@@ -9,12 +10,9 @@ import org.springframework.stereotype.Service
 @Service
 class GiftListServiceImpl(private val giftListRepository: GiftListRepository) : GiftListService {
 
-    companion object {
-        const val FIRST_VALUE = 0
-    }
 
-    override fun save(giftList: GiftList) = giftListRepository
-            .save(giftList)
+    override fun save(entity: GiftList) = giftListRepository
+            .save(entity)
             .sortGifts()
 
     override fun getAll(): List<GiftList> {

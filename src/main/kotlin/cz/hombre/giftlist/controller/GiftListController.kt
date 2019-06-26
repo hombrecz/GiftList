@@ -5,23 +5,24 @@ import cz.hombre.giftlist.service.GiftListService
 import org.springframework.web.bind.annotation.*
 
 @RestController
+@RequestMapping("giftList")
 class GiftListController(private val giftListService: GiftListService) {
 
-    @GetMapping("/giftList/{owner}")
+    @GetMapping("/{owner}")
     fun getGiftList(@PathVariable owner: String) = giftListService.findByOwner(owner)
 
-    @PostMapping("/giftList")
+    @PostMapping
     fun createGiftList(@RequestParam("owner") owner: String): GiftList = giftListService.save(GiftList(owner))
 
-    @GetMapping("/giftList")
+    @GetMapping
     fun getAllGiftLists(): List<GiftList> = giftListService.getAll()
 
-    @PostMapping("/giftList/{owner}")
+    @PostMapping("/{owner}")
     fun addGift(@PathVariable owner: String, @RequestParam("gift") giftName: String) = giftListService.addGift(owner, giftName)
 
-    @PutMapping("/giftList/{owner}/{giftName}")
+    @PutMapping("/{owner}/{giftName}")
     fun reserveGift(@PathVariable owner: String, @PathVariable giftName: String, @RequestParam("buyer") buyer: String) = giftListService.reserveGift(owner, giftName, buyer)
 
-    @DeleteMapping("/giftList/{owner}/{giftName}")
+    @DeleteMapping("/{owner}/{giftName}")
     fun removeGift(@PathVariable owner: String, @PathVariable giftName: String) = giftListService.removeGift(owner, giftName)
 }

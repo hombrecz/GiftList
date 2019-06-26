@@ -2,11 +2,7 @@ package cz.hombre.giftlist.service
 
 import cz.hombre.giftlist.dto.GiftList
 
-interface GiftListService {
-
-    fun save(giftList: GiftList): GiftList //TODO OD common
-
-    fun getAll(): List<GiftList> //TODO OD common
+interface GiftListService : EntityService<GiftList> {
 
     fun addGift(owner: String, giftName: String): GiftList
 
@@ -17,5 +13,3 @@ interface GiftListService {
     fun findByOwner(owner: String): GiftList
 
 }
-
-// TODO OD - let the impl inherit from EntityService class
