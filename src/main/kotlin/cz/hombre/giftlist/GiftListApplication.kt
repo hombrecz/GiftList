@@ -10,3 +10,5 @@ class GiftListApplication : SpringBootServletInitializer()
 fun main(args: Array<String>) {
     runApplication<GiftListApplication>(*args)
 }
+
+//TODO OD - try "object mapper" -> entity serialize automatically https://github.com/Kotlin/kotlinx.serialization
